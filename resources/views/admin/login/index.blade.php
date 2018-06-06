@@ -12,10 +12,10 @@
             <div class="col-sm-7">
                 <div class="signin-info">
                     <div class="logopanel m-b">
-                        <h1>[ H+ ]</h1>
+                        <h1></h1>
                     </div>
                     <div class="m-b"></div>
-                    <h4>欢迎使用 <strong> 成语小程序后台</strong></h4>
+                    <h4>欢迎使用 <strong> 商城后台</strong></h4>
                     <ul class="m-b">
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势一</li>
                         <li><i class="fa fa-arrow-circle-o-right m-r-xs"></i> 优势二</li>
@@ -31,7 +31,7 @@
                 <form method="post" action="{{route('login')}}">
                     {{ csrf_field() }}
                     <h4 class="no-margins">登录：</h4>
-                    <p class="m-t-md">登录到成语小程序后台</p>
+                    <p class="m-t-md">登录商城后台</p>
                     <input type="text" class="form-control uname" placeholder="用户名" name="username" value="{{old('username')}}" />
                     <input type="password" class="form-control pword m-b" name="password" placeholder="密码" />
                     <input type="text" class="form-control pword m-b" placeholder="验证码" name="captcha" value=""/><img src="{{ captcha_src('flat') }}" onclick="this.src='/captcha/flat?'+Math.random()">

@@ -88,6 +88,19 @@
 
                 </ul>
             </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa fa-bar-chart-o"></i>
+                    <span class="nav-label">分类管理</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
+                    <li>
+                        <a class="J_menuItem" href="{{route('category.index')}}">商品分类</a>
+                    </li>
+
+                </ul>
+            </li>
         </ul>
     </div>
 </nav>

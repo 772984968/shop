@@ -3,7 +3,7 @@
 @section('_meta')
     @include('admin.layouts._meta')
     <link href="{{asset('admin/plugins/layui/css/layui.css')}}" rel="stylesheet">
-@endsection
+      @endsection
 {{--title--}}
 @section('title', '后台管理系统')
 {{--coentent 主题内容--}}

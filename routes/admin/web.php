@@ -33,6 +33,10 @@ Route::group(['prefix'=>'/admin','namespace'=>'Admin'],function(){
            Route::resource('idiom','IdiomController');
            //活动管理
            Route::resource('activity','ActivityController');
+           //分类管理
+           Route::any('category/getData','CategoryController@getData')->name('category.getData');
+           Route::resource('category','CategoryController');
+
        });
 
 
