@@ -10,37 +10,29 @@
         <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
 
         </fieldset>
-        <form class="layui-form" action="{{route('category.store')}}" method="post">
-            {{ csrf_field() }}
+             {{ csrf_field() }}
             <div class="layui-form-item">
                 <label class="layui-form-label">名称</label>
                 <div class="layui-input-block">
-                    <input type="text" lay-verify=""  value="" name="name"
+                    <input type="text" lay-verify=""  value="{{$category->name}}" name="category_name"
                            placeholder="" autocomplete="off" class="layui-input">
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <label class="layui-form-label">父级ID</label>
-                <div class="layui-input-block">
-                    <input type="text" lay-verify=""  value="@if(isset($category)){{$category->id}}@endif" name="parent_id"
-                           placeholder="" autocomplete="off" class="layui-input" disabled="disabled">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">排序</label>
                 <div class="layui-input-block">
-                    <input type="text" lay-verify=""  value="0" name="sort"
+                    <input type="text" lay-verify=""  value="{{$category->sort}}" name="sort"
                            placeholder="" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
+                <label class="layui-form-label">创建时间</label>
                 <div class="layui-input-block">
-                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
-                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
-
+                    <input type="text" lay-verify=""  value="{{$category->created_at}}" name="sort"
+                           placeholder="" autocomplete="off" class="layui-input">
                 </div>
             </div>
-        </form>
+
     </div>
     </body>
 

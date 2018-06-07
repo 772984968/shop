@@ -3,8 +3,6 @@
 namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use Validator;
 abstract class TemplateController extends BaseController
 {
 
@@ -30,14 +28,7 @@ abstract class TemplateController extends BaseController
         $data=$paginate->toArray();
         return  $data=['code'=>0,'msg'=>'','count'=>$count,'data'=>$data['data']];
      }
-     //验证
-   public function  checkValidate($request, $rules, $messages=[], $customAttributes=[]){
-        $validator = Validator::make($request->all(),$rules,$messages,$customAttributes);
-        if ($validator->fails()) {
-               return $error=$validator->errors()->all()[0];
-            }
-        return true;
-    }
+
     public function destroy(Request $request,$id)
     {
 

@@ -10,28 +10,33 @@ class CategoryTableSeeder extends Seeder
     {
         $categories = [
             [
-                'category_name'        => '手机数码',
+                'name'        => '手机数码',
 
             ],
             [
-                'category_name'        => '服装服饰',
+                'name'        => '服装服饰',
 
             ],
             [
-                'category_name'        => '电脑配件',
+                'name'        => '电脑配件',
 
             ],
             [
-                'category_name'        => '家具家居',
+                'name'        => '家具家居',
 
             ],
             [
-                'category_name'=>'鞋类配饰',
+                'name'=>'鞋类配饰',
             ]
         ];
-       \App\Models\Category::insert($categories);
-       $this->level2();
-       $this->level3();
+        foreach ($categories as $vo){
+            $node=Category::create($vo);
+            $node->saveAsRoot();
+        }
+
+
+         $this->level2();
+         $this->level3();
     }
     public function level2(){
         $level2=[
@@ -43,11 +48,11 @@ class CategoryTableSeeder extends Seeder
 
             foreach ($level2 as $key=>$value){
                 foreach ($value as $vo){
-                    Category::create([
-                        'parent_id'=>$key+1,
-                        'category_name'=>$vo,
-                        'level'=>1,
-                    ]);
+                        $node=new Category();
+                        $node->parent_id=$key+1;
+                        $node->name=$vo;
+                        $node->level=1;
+                        $node->save();
                 }
 
             }
@@ -68,16 +73,16 @@ class CategoryTableSeeder extends Seeder
         ,['皮鞋','高跟鞋']
         ,['小鞋','宝宝鞋']
     ];
-
+    $key=6;
     foreach ($level3 as $value){
-         static $key=6;
         foreach ($value as $vo){
-            Category::create([
-                'parent_id'=>$key++,
-                'category_name'=>$vo,
-                'level'=>2,
-            ]);
+            $node=new Category();
+            $node->parent_id=$key;
+            $node->name=$vo;
+            $node->level=2;
+            $node->save();
         }
+        $key++;
 
     }
 }
