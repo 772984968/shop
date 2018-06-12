@@ -36,6 +36,8 @@ Route::group(['prefix'=>'/admin','namespace'=>'Admin'],function(){
 
            //分类管理
            require_once __DIR__.'/category.php';
+           //产品管理
+           require_once __DIR__.'/product.php';
 
        });
 

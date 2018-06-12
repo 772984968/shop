@@ -7,7 +7,7 @@
     <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
     <div id="wrapper">
         <!--左侧导航开始-->
-    @include('admin/public/navbar')
+    @include('admin/public/_menu')
     <!--左侧导航结束-->
         <!--右侧部分开始-->
     @include('admin/public/wrapper')

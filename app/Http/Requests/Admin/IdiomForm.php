@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
@@ -7,7 +6,7 @@ use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
 
-class CommonFrom extends FormRequest
+class IdiomForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -33,4 +32,16 @@ class CommonFrom extends FormRequest
         ];
         return $result;
     }
- }
+    public function rules()
+    {
+        return [
+            'name'=>'required',
+            'spell'=>'required',
+            'explain'=>'required',
+            'pinyin'=>'required',
+            'first_word'=>'required',
+            'last_word'=>'required',
+            'level_id'=>'required',
+        ];
+    }
+}

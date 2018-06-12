@@ -1,7 +1,8 @@
 <?php
-//意见反馈
-$api->post('feedback','CommonController@feedback')->name('Common.feedback');
-//课堂
-$api->get('classroom','CommonController@classroom')->name('Common.classroom');
-//成语搜索
-$api->get('search','CommonController@search')->name('Common.search');
+//类型列表
+$api->get('category','CategoryController@index')->name('Category.index');
+
+//最新商品列表
+$api->get('product/new','ProductController@is_new')->name('Product.new');
+//推荐商品列表
+$api->get('product/hot','ProductController@is_hot')->name('Product.hot');

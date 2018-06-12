@@ -89,9 +89,7 @@ class  Upload{
         }
         return false;
     }
-    /**检测上文件大小
-     *@return boolean
-     */
+    //检测上文件大小
     protected function checkSize($type=0){
         if ($type==0){
             if ($this->fileInfo->getSize()<= $this->maxImageSize){
@@ -167,6 +165,7 @@ class  Upload{
         if ($this->error!=''||$this->destination==''){
             return $this->error;
         }
-        return "http://".$_SERVER['HTTP_HOST'].$this->destination;
+       // return "http://".$_SERVER['HTTP_HOST'].$this->destination;
+        return $this->destination;
     }
 }

@@ -6,8 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\ValidationException;
 
-
-class IdiomFrom extends FormRequest
+class CommonForm extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,29 +19,16 @@ class IdiomFrom extends FormRequest
     }
     protected function failedValidation(Validator $validator)
     {
-
         throw new ValidationException($validator,response(
             $this->formatErrors($validator)));
     }
     protected function formatErrors(Validator $validator)
     {
-        $message = $validator->errors()->all();
+       $message = $validator->errors()->all();
         $result = [
             'msg' => $message[0],
             'code' => 400
         ];
         return $result;
     }
-    public function rules()
-    {
-        return [
-            'name'=>'required',
-            'spell'=>'required',
-            'explain'=>'required',
-            'pinyin'=>'required',
-            'first_word'=>'required',
-            'last_word'=>'required',
-            'level_id'=>'required',
-        ];
-    }
-}
+ }

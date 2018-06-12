@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Admin\ActivityFrom;
-use App\Http\Requests\Admin\CommonFrom;
+use App\Http\Requests\Admin\ActivityForm;
+use App\Http\Requests\Admin\CommonForm;
 use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -26,14 +26,14 @@ class ActivityController extends TemplateController
 
     }
 
-    public function store(ActivityFrom $request){
+    public function store(ActivityForm $request){
         $model=$this->model;
         $model->fill($request->validated());
         if ($model->save()){
             return $this->json();
         }
     }
-    public function update(ActivityFrom $request,$id){
+    public function update(ActivityForm $request, $id){
         $model=$this->model->find($id);
         $model->fill($request->validated());
         if ($model->save()){

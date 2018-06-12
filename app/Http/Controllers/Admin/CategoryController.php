@@ -22,11 +22,7 @@ class CategoryController extends BaseController
             return view('admin.category.index',compact('nodes'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create(Request $request)
     {
         if ($request->has('id')){
@@ -36,12 +32,7 @@ class CategoryController extends BaseController
         return view('admin/category/create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
         $data=$this->checkValidate($request,[
@@ -64,12 +55,6 @@ class CategoryController extends BaseController
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(Request $request,$id=null)
     {
 
@@ -154,5 +139,13 @@ class CategoryController extends BaseController
         $category=Category::find($id);
         return view('admin.category.detail',compact('category'));
     }
+public function getCategory(Request $request){
+    $id=$request->input('pid');
+    $rs=Category::getSonCategory($id);
+  if ($rs){
+    return   $this->json($rs,200,'success');
+    }
+    return $this->json();
+}
 
 }

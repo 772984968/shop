@@ -1,10 +1,6 @@
 <?php
-
 namespace App\Http\Requests\Admin;
-
-use Illuminate\Foundation\Http\FormRequest;
-
-class ActivityFrom extends CommonFrom
+class ActivityForm extends CommonForm
 {
      public function rules()
     {

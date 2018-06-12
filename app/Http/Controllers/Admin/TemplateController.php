@@ -15,7 +15,7 @@ abstract class TemplateController extends BaseController
 
         $data['title'] = $this->getTitle();// 标题
         $data['config'] = $this->config;//获取配置
-        return view('admin.template.index', ['data'=>$data]);
+        return view('admin.template.index', compact('data'));
     }
 
     abstract function getTitle();
@@ -61,7 +61,8 @@ abstract class TemplateController extends BaseController
     }
     //展示创建页
     public function create(){
-        return view('admin.'.$this->config['create']);
+        $config = $this->config;//获取配置
+        return view('admin.'.$this->config['create'],compact('config'));
     }
 
 }

@@ -1,17 +1,17 @@
 <?php
 
 namespace App\Http\Controllers\Api;
-use Dingo\Api\Routing\Helpers;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use Dingo\Api\Exception\StoreResourceFailedException;
-use Validator;
-class AuthController extends Controller
+
+class AuthController extends BaseController
 {
 
-    use Helpers;
+
     public  function  __construct()
     {
+
         $this->middleware('auth:api')->except(['login','weappStore']);
     }
 
@@ -47,22 +47,7 @@ class AuthController extends Controller
              return $this->arrayResponse();
 
     }
-    public function arrayResponse($message='success',$status=200,$data=[]){
-        return $this->response()->array(
-            [
-                'message' => $message,
-               'status_code' => $status,
-                'data'=>$data,
 
-            ]
-        );
-    }
 
-    public function  checkValidate($request, $rules, $messages=[], $customAttributes=[]){
-        $validator = Validator::make($request->all(),$rules,$messages,$customAttributes);
-        if ($validator->fails()) {
-            throw new StoreResourceFailedException('Validation Error', $validator->errors());
-        }
-        return $validator->getData();
-         }
+
   }

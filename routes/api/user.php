@@ -21,7 +21,8 @@ $api->group(['middleware' => 'auth:api'], function ($api) {
     $api->post('collection','CollectionController@setCollection');
     //添加收藏
     $api->delete('collection','CollectionController@delCollection');
-
+    //地址管理
+    $api->resource('address','AddressController');
 
 
     //添加成语近义词，反义词
