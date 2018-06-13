@@ -24,15 +24,6 @@
                                 <i class="fa fa-chevron-up"></i>
 
                             </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="table_data_tables.html#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="table_data_tables.html#">选项1</a>
-                                </li>
-                                <li><a href="table_data_tables.html#">选项2</a>
-                                </li>
-                            </ul>
                             <a class="close-link">
                                 <i class="fa fa-times"></i>
                             </a>
@@ -41,8 +32,13 @@
                     <div class="ibox-content">
 
                         @if(isset($data['config']['create']))
-                            <div class="">
-                                <a onclick="layer_show('添加','{{route($data['config']['create'])}}')" href="javascript:void(0);" class="btn btn-primary glyphicon glyphicon-plus "></a>
+                            <div class="layui-btn-group">
+                                <button class="layui-btn layui-btn-sm" onclick="layer_show('添加','{{route($data['config']['create'])}}')" href="javascript:void(0);">
+                                    <i class="layui-icon" ></i>
+                                </button>
+                                <button class="layui-btn layui-btn-sm">
+                                    <i class="layui-icon"></i>
+                                </button>
                             </div>
                     @endif
                     <!--
@@ -60,9 +56,6 @@
                         </div>
                         <button class="layui-btn" data-type="reload">搜索</button>
                     </div>-->
-                        <div  class="layui-btn-group demoTable2">
-                            <button class="layui-btn layui-btn-danger" data-type="getCheckData">删除</button>
-                        </div>
                         <table class="layui-hide" id="demo" lay-filter="basedemo"></table>
                         <script type="text/html" id="barDemo">
                             @if(isset($data['config']['show']))
@@ -86,6 +79,7 @@
 @section('script')
     @include('admin.layouts._script')
     <script src="{{asset('admin/plugins/layui/layui.all.js')}}"></script>
+
     <script>
         layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
             var laydate = layui.laydate //日期

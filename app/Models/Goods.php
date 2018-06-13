@@ -16,4 +16,9 @@ class Goods extends Model
 
         return $this->hasMany(GoodsImages::class);
     }
+    //类型关联
+    public function category(){
+        return $this->belongsTo(Category::class);
+
+    }
 }

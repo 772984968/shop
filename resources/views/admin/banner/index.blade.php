@@ -15,7 +15,7 @@
             <div class="col-sm-12">
                 <div class="ibox float-e-margins">
                     <div class="ibox-title">
-                        <h5>商品列表</h5>
+                        <h5></h5>
                         <div class="ibox-tools">
                             <a class="collapse-link" href="javascript:location.replace(location.href);">
                                 <i class="fa fa-refresh"></i>
@@ -33,14 +33,14 @@
 
                         @if(isset($data['config']['create']))
                             <div class="layui-btn-group">
-                                <button class="layui-btn layui-btn-sm" onclick="layer_show('添加商品','{{route($data['config']['create'])}}')" href="javascript:void(0);">
+                                <button class="layui-btn layui-btn-sm" onclick="layer_show('添加','{{route($data['config']['create'])}}')" href="javascript:void(0);">
                                     <i class="layui-icon" ></i>
                                 </button>
                                 <button class="layui-btn layui-btn-sm">
                                     <i class="layui-icon"></i>
                                 </button>
                             </div>
-                        @endif
+                    @endif
                     <!--
                                        <div class="demoTable">  搜索：
                                            <div class="layui-input-inline" >
@@ -59,7 +59,7 @@
                         <table class="layui-hide" id="demo" lay-filter="basedemo"></table>
                         <script type="text/html" id="barDemo">
                             @if(isset($data['config']['show']))
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">添加</a>
                             @endif
                             @if(isset($data['config']['edit']))
                             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -79,20 +79,6 @@
 @section('script')
     @include('admin.layouts._script')
     <script src="{{asset('admin/plugins/layui/layui.all.js')}}"></script>
-    {{--表格模板--}}
-    <script type="text/html" id="categoryTpl">
-        @{{d.category.name}}
-    </script>
-    <script type="text/html" id="thumbTpl">
-
-       <img src="@{{d.goods_thumb}}" width="150" height="150" >
-
-    </script>
-    <script type="text/html" id="checkSaleTpl">
-
-        <input type="checkbox" name="is_on_sale" value="@{{d.id}}" lay-skin="switch" lay-text="是|否" lay-filter="saleDemo" @{{ d.is_on_sale ==1 ? 'checked' : '' }}>
-
-    </script>
 
     <script>
         layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
@@ -100,7 +86,6 @@
                 ,laypage = layui.laypage //分页
             layer = layui.layer //弹层
                 ,table = layui.table //表格
-                ,form = layui.form;//表单
             //执行一个 table 实例
             table.render({
                 elem: '#demo'
@@ -116,10 +101,8 @@
             table.on('tool(basedemo)', function(obj){
                 var data = obj.data;
                 if(obj.event === 'detail'){
-                    var url="{{route($data['config']['show'],['id'=>':id'])}}".replace(':id',data.id);
-                    layer_show("查看详情",url);
                 } else if(obj.event === 'del'){
-                    layer.confirm('真的删除行么', function(index){
+                    layer.confirm('真的删除么', function(index){
                         //向服务端发送删除指令
                         var   url="{{route($data['config']['delete'],":id")}}".replace(':id',data.id);
                         $.ajax({
@@ -157,18 +140,6 @@
                     @endif
 
                 }
-                if(obj.event==='showImage'){
-                    layer.open({
-                        type: 1,
-                        title: false,
-                        offset: 'auto',
-                        closeBtn: 0,
-                        skin: 'layui-layer-nobg', //没有背景色
-                        shadeClose: true,
-                        content: '<img  src='+data.goods_thumb+'>'
-                    });
-
-                }
             });
             //批量删除
             $('.demoTable2 .layui-btn').on('click', function(){
@@ -201,47 +172,21 @@
                     });
                 }
             });
-            //监听上下架操作
-            form.on('switch(saleDemo)', function(obj){
-                $.ajax({
-                    url:"{{route('product.switchSale')}}",
-                    type:'POST',
-                    dataType:'json',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    data:{
-                        id:this.value,
-                        switch:obj.elem.checked
-                    },
-                    success:function(data){
-                        if(data.code=='200'){
-                            layer.tips('修改成功',obj.othis);
-                        }else{
-                            layer.msg(data.msg,{icon:5});
-                        }
-                    },
-                    error:function(data){
-                        layer.msg('数据发送失败',{icon:5});
-                    }
-                });
 
-                //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
-
-            });
         });
     </script>
+
     <script type="text/javascript">
         function layer_show(title,url){
-            var index=layer.open({
+           var index= layer.open({
                 type: 2,//类型
                 title: title,
                 anim: 2 ,//打开方式
-               // area: ['800px', '600px'],
+                maxmin: true, //开启最大化最小化按钮
+                area: ['800px', '600px'],
                 content:url
             });
-            layer.full(index);
+           layer.full(index);
         }
     </script>
-
 @stop

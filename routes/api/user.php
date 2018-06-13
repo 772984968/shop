@@ -15,13 +15,11 @@ $api->group(['middleware' => 'auth:api'], function ($api) {
     $api->get('personal','UserController@personal');
     //绑定信息
     $api->post('setInfo','UserController@setInfo');
-    //收藏列表
-    $api->get('collection','CollectionController@collection');
-    //添加收藏
-    $api->post('collection','CollectionController@setCollection');
-    //添加收藏
-    $api->delete('collection','CollectionController@delCollection');
-    //地址管理
+
+    //收藏管理
+    $api->resource('collection','CollectionController');
+
+   //地址管理
     $api->resource('address','AddressController');
 
 

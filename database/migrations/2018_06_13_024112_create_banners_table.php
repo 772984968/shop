@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateCollectionsTable extends Migration
+class CreateBannersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,10 @@ class CreateCollectionsTable extends Migration
      */
     public function up()
     {
-        Schema::create('collections', function (Blueprint $table) {
+        Schema::create('banners', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->comment('用户ID');
-            $table->integer('goods_id')->comment('商品ID');
+            $table->string('name')->comment('名字');
+            $table->tinyInteger('status')->default(0)->comment('状态');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ class CreateCollectionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('collections');
+        Schema::dropIfExists('banners');
     }
 }

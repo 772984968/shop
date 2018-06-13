@@ -12,13 +12,11 @@ class Collection extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
-    //关联等级
-    public function level(){
-    return $this->belongsTo(Level::class)->select('id','level');
+    //关联商品
+    public function goods(){
+        return $this->belongsTo(Goods::class);
+
     }
-    //关联成语
-    public function idiom(){
-       return $this->belongsTo(Idiom::class)->select('id','name');
-    }
+
 
 }

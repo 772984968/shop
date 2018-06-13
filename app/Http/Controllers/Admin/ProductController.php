@@ -105,14 +105,12 @@ class ProductController extends TemplateController
         return [[
             ['type' => 'checkbox'],
             ['field' => 'id', 'title' => 'ID', 'sort' => 'true'],
-            ['field' => 'category_id', 'title' => '所属分类'],
-            ['field' => 'goods_thumb', 'title' => '商品货号'],
-            ['field' => 'goods_name', 'title' => '商品名称'],
+            ['field' => 'category_id', 'title' => '所属分类','templet'=>'#categoryTpl'],
+            ['field' => 'goods_thumb', 'title' => '略缩图','width'=>150,'templet'=>'#thumbTpl','event'=>'showImage', 'style'=>'cursor: pointer'],
+            ['field' => 'goods_name', 'title' => '商品名称','width'=>300],
             ['field' => 'goods_number', 'title' => '商品库存', 'sort' => 'true'],
-            ['field' => 'market_price', 'title' => '市场售价', 'sort' => 'true'],
             ['field' => 'shop_price', 'title' => '本店价格', 'sort' => 'true'],
-            ['field' => 'promote_price', 'title' => '促销价格', 'sort' => 'true'],
-            ['field' => 'is_no_sale', 'title' => '是否上架'],
+            ['field' => 'is_on_sale', 'title' => '是否上架','templet'=>'#checkSaleTpl'],
             ['field' => 'sales_sum', 'title' => '销售数量', 'sort' => 'true'],
             ['field' => 'right', 'title' => '数据操作', 'align' => 'center', 'toolbar' => '#barDemo', 'width' => 300]
         ]];
@@ -120,11 +118,12 @@ class ProductController extends TemplateController
     }
 
     public function show($id)
-    {
-        $goods = Goods::find($id);
-
-        return view('admin.product.show', compact('goods'));
-
+    { $model=$this->model::with('images')->find($id);
+        $config = $this->config;//获取配置
+        //获取类型
+        $category=Category::defaultOrder()->ancestorsAndSelf($model->category_id);
+        $node=Category::getSonCategory('pid');
+        return view('admin.'.''.$this->config['show'],compact('model','config','category','node'));
     }
     //展示创建页
     public function create(){
@@ -151,4 +150,30 @@ class ProductController extends TemplateController
         }
 
     }
+
+    //开启上架
+    public function switchSale(Request $request){
+        if ($request->ajax()){
+            $id=$request->input('id');
+            $switch=$request->input('switch');
+            $switch=$switch?1:0;
+            if (Goods::where('id',$id)->update(['is_on_sale'=>$switch])){
+                return $this->json();
+            }
+            return $this->json([],'',400);
+
+        }
+
+    }
+
+    //获取数据
+    public function getData($request){
+        $model= $this->model;
+        $limit=$request->limit??'10';
+        $count=$model->count();
+        $paginate=$model->with('category')->paginate($limit);
+        $data=$paginate->toArray();
+        return  $data=['code'=>0,'msg'=>'','count'=>$count,'data'=>$data['data']];
+    }
+
 }

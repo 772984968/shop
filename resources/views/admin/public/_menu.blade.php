@@ -69,6 +69,12 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
+                        <a class="J_menuItem" href="{{route('banner.index')}}">首页Banner</a>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="{{route('bannerImages.index')}}">Banner图片管理</a>
+                    </li>
+                    <li>
                         <a class="J_menuItem" href="{{route('activity.index')}}">活动中心</a>
                     </li>
                     <li>

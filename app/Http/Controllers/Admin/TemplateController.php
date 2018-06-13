@@ -57,7 +57,8 @@ abstract class TemplateController extends BaseController
     //展示编辑页
     public function edit($id){
         $model=$this->model::find($id);
-        return view('admin.'.''.$this->config['edit'],compact('model'));
+        $config = $this->config;//获取配置
+        return view('admin.'.''.$this->config['edit'],compact('model','config'));
     }
     //展示创建页
     public function create(){
