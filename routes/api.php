@@ -11,10 +11,11 @@ $api->version('v1', function ($api) {
             require_once __DIR__.'/api/user.php';
         });
 
-        //成语管理
-        $api->group(['prefix'=>'idiom','middleware' => 'auth:api'],function($api){
-            require_once __DIR__.'/api/idiom.php';
+        //商品
+        $api->group(['prefix'=>'product'],function($api){
+            require_once __DIR__.'/api/product.php';
         });
+
         //回顾管理
         $api->group(['prefix'=>'review'],function($api){
             require_once __DIR__.'/api/review.php';

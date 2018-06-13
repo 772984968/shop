@@ -7,4 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Banner extends Model
 {
     protected $fillable=['name','status'];
+    public function images(){
+        return $this->hasMany(BannerImages::class);
+
+    }
 }
