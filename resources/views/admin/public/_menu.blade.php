@@ -118,6 +118,9 @@
                     <li>
                         <a class="J_menuItem" href="{{route('product.index')}}">产品列表</a>
                     </li>
+                    <li>
+                        <a class="J_menuItem" href="{{route('comment.index')}}">评论列表</a>
+                    </li>
                 </ul>
             </li>
         </ul>

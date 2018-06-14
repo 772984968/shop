@@ -33,8 +33,15 @@ class ProductController extends BaseController
                 'product_id'=>'required'
             ]
             );
-        $rs=Goods::with('images')->where('is_on_sale',1)->findOrFail($data['product_id']);
-        return $this->arrayResponse($rs);
+        $rs=Goods::with('images')->where('is_on_sale',1)->find($data['product_id']);
+        if ($rs){
+            return $this->arrayResponse($rs);
+        }
+        else{
+            return $this->response()->errorNotFound('商品不存在或已下架');
+
+        }
+
 
 
     }

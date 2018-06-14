@@ -17,7 +17,7 @@
                     <div class="ibox-title">
                         <h5>商品列表</h5>
                         <div class="ibox-tools">
-                            <a class="collapse-link" href="javascript:location.replace(location.href);">
+                            <a class="" href="javascript:location.replace(location.href);">
                                 <i class="fa fa-refresh"></i>
                             </a>
                             <a class="collapse-link">

@@ -57,7 +57,6 @@
 @section('script')
 
     @include('admin.layouts._script')
-    <script src="{{asset('admin/js/content.min.js?v=1.0.0')}}"></script>
     <script src="{{asset('admin/plugins/layui/layui.all.js')}}"></script>
     <script>
         //Demo

@@ -17,7 +17,7 @@
                     <div class="ibox-title">
                         <h5></h5>
                         <div class="ibox-tools">
-                            <a href="javascript:location.replace(location.href);">
+                            <a  href="javascript:location.replace(location.href);">
                                 <i class="fa fa-refresh"></i>
                             </a>
                             <a class="collapse-link">
@@ -61,7 +61,7 @@
                         <table class="layui-hide" id="demo" lay-filter="basedemo"></table>
                         <script type="text/html" id="barDemo">
                             @if(isset($data['config']['show']))
-                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看</a>
+                            <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">查看详情</a>
                             @endif
                             @if(isset($data['config']['edit']))
                             <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
@@ -82,6 +82,16 @@
     @include('admin.layouts._script')
     <script src="{{asset('admin/plugins/layui/layui.all.js')}}"></script>
 
+    {{--表格模板--}}
+    <script type="text/html" id="userTpl">
+        @{{d.user.name}}
+    </script>
+    <script type="text/html" id="goodsTpl">
+        @{{d.goods.goods_name}}
+    </script>
+    <script type="text/html" id="orderTpl">
+    空
+    </script>
     <script>
         layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
             var laydate = layui.laydate //日期
@@ -103,7 +113,8 @@
             table.on('tool(basedemo)', function(obj){
                 var data = obj.data;
                 if(obj.event === 'detail'){
-                    layer.msg('ID：'+ data.id + ' 的查看操作');
+                    var url="{{route($data['config']['show'],['id'=>':id'])}}".replace(':id',data.id);
+                    layer_show("查看详情",url);
 
                 } else if(obj.event === 'del'){
                     layer.confirm('真的删除么', function(index){

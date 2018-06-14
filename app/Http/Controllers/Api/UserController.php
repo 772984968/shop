@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\Api\ResetPasswordForm;
+use App\Models\Comment;
 use App\Models\Idiom;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -18,69 +20,80 @@ class UserController extends AuthController
     }
 
     //绑定微信信息
-    public function setInfo(Request $request){
-        $user=auth('api')->user();
+    public function setInfo(Request $request)
+    {
+        $user = auth('api')->user();
         $this->checkValidate($request,
             [
-                'nickName'=>'required',
+                'nickName' => 'required',
             ]);
-        if ($request->has('nickName')){
-            $user->name=$request->input('nickName');
+        if ($request->has('nickName')) {
+            $user->name = $request->input('nickName');
         }
-        if ($request->has('phone')){
-            $user->phone=$request->input('phone');
+        if ($request->has('phone')) {
+            $user->phone = $request->input('phone');
         }
-        if ($user->save()){
+        if ($user->save()) {
             return $this->arrayResponse();
         }
         return $this->response()->errorInternal('系统错误，请重试');
     }
 
-    //个人中心
-    public function personal()
-    {
-        $user = auth('api')->user();
-        return $this->arrayResponse('success', '200', $user);
-    }
-
-    //用户首页
+    //用户中心
     public function index()
     {
-        return $this->arrayResponse();
+        $user = auth('api')->user();
+        return $this->arrayResponse($user, 'success', '200');
     }
 
-    //用户登陆
-    public function login(Request $request)
-    {
 
-        return parent::login($request);
+    //个人评价列表
+    public function comment()
+    {
+        $user = auth('api')->user();
+        $comment=Comment::with('images')->where('user_id',$user->id)->paginate();
+        return $this->arrayResponse($comment, 'success', '200');
     }
 
-    //用户退出
-    public function logout()
+    //更新信息
+    public function update(Request $request)
     {
-        return parent::logout();
-
-
+        $data = $request->all();
+        $user = auth('api')->user();
+        $user->fill($data);
+        if ($user->save()) {
+            return $this->arrayResponse($user, 'success', '200');
+        };
     }
 
-    //刷新令牌
-    public function refresh()
+    //重置密码
+    public function resetPassword(ResetPasswordForm $request)
     {
-        return parent::refresh();
+        $data = $request->validated();
+        $user = auth('api')->user();
+        if (!auth('api')->attempt(['password'=>$data['old_password'],'username'=>$user->username])) {
+            return $this->response()->error('原密码不正确',400);
+        }
+        $user->password = bcrypt($data['password']);
+        if ($user->save()){
+            return $this->arrayResponse([], '修改成功', '200');
+        }
+        return $this->response()->error('修改失败');
+
     }
 
     //小程序登陆
-    public function weappStore(Request $request){
-        $rs=$this->checkValidate($request,
+    public function weappStore(Request $request)
+    {
+        $rs = $this->checkValidate($request,
             [
-                'code'=>'required|string',
+                'code' => 'required|string',
             ]);
         // 根据 code 获取微信 openid 和 session_key
-       $miniProgram = EasyWeChat::miniProgram();
-       $data = $miniProgram->auth->session($rs['code']);
-     //  $data['openid']='othXi5PiFWC3ZNolCkSCUgkZCQy';
-  //   $data['session_key']='6kAO6sfsgoGU0MjBxsah8A==';
+        $miniProgram = EasyWeChat::miniProgram();
+        $data = $miniProgram->auth->session($rs['code']);
+        //  $data['openid']='othXi5PiFWC3ZNolCkSCUgkZCQy';
+        //   $data['session_key']='6kAO6sfsgoGU0MjBxsah8A==';
 
         // 如果结果错误，说明 code 已过期或不正确，返回 401 错误
         if (isset($data['errcode'])) {
@@ -89,42 +102,16 @@ class UserController extends AuthController
         // 找到 openid 对应的用户
         $user = User::where('weapp_openid', $data['openid'])->first();
         $attributes['weixin_session_key'] = $data['session_key'];
-        if (!$user){
+        if (!$user) {
             $attributes['weapp_openid'] = $data['openid'];
-            $user=User::create($attributes);
-        }else{
+            $user = User::create($attributes);
+        } else {
             $user->update($attributes);
         }
         //更新用户信息
-        $token=auth('api')->login($user);
+        $token = auth('api')->login($user);
         // 为对应用户创建 JWT
         return $this->respondWithToken($token);
-        }
-    //刷新数据
-    public function idiom(Request $request)
-    {
-        $rs = DB::table('idioms')->offset($request->offset)->limit($request->limit)->select('id', 'name')->get();
-        $client = new Client();
-        foreach ($rs as $vo) {
-
-            $res = $client->request('POST', 'http://api.jisuapi.com/chengyu/detail', [
-                'form_params' => [
-                    'appkey' => '52cde2b299a25128',
-                    'chengyu' => $vo->name,
-                ]
-            ]);
-
-            $rs = json_decode($body = $res->getBody());
-            $antonym = [];
-            $thesaurus = [];
-            if (!empty($rs->result->antonym)) {
-                $antonym = $rs->result->antonym;
-            }
-            if (!empty($rs->result->thesaurus)) {
-                $thesaurus = $rs->result->thesaurus;
-            }
-            $res = DB::table('idioms')->where('id', $vo->id)->update(['antonym' => implode(',', $antonym), 'thesaurus' => implode(',', $thesaurus)]);
-        }
     }
 
 }
