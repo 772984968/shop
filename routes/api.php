@@ -15,11 +15,9 @@ $api->version('v1', function ($api) {
         $api->group(['prefix'=>'product'],function($api){
             require_once __DIR__.'/api/product.php';
         });
+        //订单
+        require_once __DIR__.'/api/order.php';
 
-        //回顾管理
-        $api->group(['prefix'=>'review'],function($api){
-            require_once __DIR__.'/api/review.php';
-        });
         //权限验证
         $api->group(['middleware' => 'auth:api'], function ($api) {
          });

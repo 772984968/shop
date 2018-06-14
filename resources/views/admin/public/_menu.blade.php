@@ -69,16 +69,23 @@
                 </a>
                 <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{route('banner.index')}}">首页Banner</a>
+                        <a class="J_menuItem" href="{{route('banner.index')}}">首页轮播图</a>
                     </li>
                     <li>
-                        <a class="J_menuItem" href="{{route('bannerImages.index')}}">Banner图片管理</a>
+                        <a class="J_menuItem" href="{{route('bannerImages.index')}}">轮播图片管理</a>
                     </li>
+
+                </ul>
+            </li>
+            <li>
+                <a href="#">
+                    <i class="fa fa fa-bar-chart-o"></i>
+                    <span class="nav-label">订单管理</span>
+                    <span class="fa arrow"></span>
+                </a>
+                <ul class="nav nav-second-level">
                     <li>
-                        <a class="J_menuItem" href="{{route('activity.index')}}">活动中心</a>
-                    </li>
-                    <li>
-                        <a class="J_menuItem" href="{{route('activity.index')}}">活动详情</a>
+                        <a class="J_menuItem" href="{{route('order.index')}}">订单列表</a>
                     </li>
                 </ul>
             </li>
