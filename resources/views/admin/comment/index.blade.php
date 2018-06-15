@@ -41,6 +41,7 @@
                                 <button class="layui-btn layui-btn-sm">
                                     <i class="layui-icon"></i>
                                 </button>
+
                             </div>
 
                     <!--
@@ -89,8 +90,9 @@
     <script type="text/html" id="goodsTpl">
         @{{d.goods.goods_name}}
     </script>
-    <script type="text/html" id="orderTpl">
-    空
+    <script type="text/html" id="checkTpl">
+        <input type="checkbox" name="check" value="@{{d.id}}" lay-skin="switch" lay-text="通过|待审核" lay-filter="saleDemo" @{{ d.check ==1 ? 'checked' : '' }}>
+
     </script>
     <script>
         layui.use(['laydate', 'laypage', 'layer', 'table', 'carousel', 'upload', 'element'], function(){
@@ -98,6 +100,7 @@
                 ,laypage = layui.laypage //分页
             layer = layui.layer //弹层
                 ,table = layui.table //表格
+                ,form = layui.form;//表单
             //执行一个 table 实例
             table.render({
                 elem: '#demo'
@@ -155,6 +158,35 @@
                     @endif
 
                 }
+
+            });
+            //监听审核操作
+            form.on('switch(saleDemo)', function(obj){
+                $.ajax({
+                    url:"{{route('comment.switchSale')}}",
+                    type:'POST',
+                    dataType:'json',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    data:{
+                        id:this.value,
+                        switch:obj.elem.checked
+                    },
+                    success:function(data){
+                        if(data.code=='200'){
+                            layer.tips('修改成功',obj.othis);
+                        }else{
+                            layer.msg(data.msg,{icon:5});
+                        }
+                    },
+                    error:function(data){
+                        layer.msg('数据发送失败',{icon:5});
+                    }
+                });
+
+                //layer.tips(this.value + ' ' + this.name + '：'+ obj.elem.checked, obj.othis);
+
             });
             //批量删除
             $('.demoTable2 .layui-btn').on('click', function(){

@@ -18,6 +18,7 @@ class AuthController extends BaseController
 
      //刷新token
     public function refresh(){
+
      return $this->respondWithToken(auth('api')->refresh());
 
     }

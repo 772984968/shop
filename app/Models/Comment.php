@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
-    protected $fillable=['goods_id','order_id','content','goods_rank','hidden','user_id'];
+    protected $fillable=['goods_id','order_id','content','goods_rank','hidden','user_id','check'];
     public function goods(){
         return $this->belongsTo(Goods::class);
     }
@@ -15,6 +15,10 @@ class Comment extends Model
     }
     public function images(){
         return $this->hasMany(CommentImage::class);
+    }
+    public function order(){
+        return $this->belongsTo(Order::class);
+
     }
 
 }

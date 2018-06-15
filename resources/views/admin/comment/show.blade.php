@@ -18,19 +18,19 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">用户ID</label>
                 <div class="layui-input-block">
-                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->user_id}}" disabled="">
+                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->user->name}}" disabled="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">商品ID</label>
                 <div class="layui-input-block">
-                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->goods_id}}" disabled="">
+                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->goods->goods_name}}" disabled="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">订单ID</label>
                 <div class="layui-input-block">
-                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->order_id}}" disabled="">
+                    <input type="text"  id="date1" autocomplete="off" class="layui-input" value="{{$model->order->id}}" disabled="">
                 </div>
             </div>
             <div class="layui-form-item">

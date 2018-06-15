@@ -44,8 +44,9 @@ class CommentController extends TemplateController
             ['field' => 'id', 'title' => 'ID', 'sort' => 'true'],
             ['field' => 'user_id', 'title' => '用户','templet'=>'#userTpl'],
             ['field' => 'goods_id', 'title' => '商品','templet'=>'#goodsTpl'],
-            ['field' => 'order_id', 'title' => '订单','templet'=>'#orderTpl'],
-            ['field' => 'content', 'title' => '内容', 'sort' => 'true','width'=>700],
+            ['field' => 'content', 'title' => '内容','width'=>700],
+            ['field' => 'created_at', 'title' => '评价时间','sort'=>'true'],
+            ['field' => 'check', 'title' => '审核状态','templet'=>'#checkTpl'],
             ['field' => 'right', 'title' => '数据操作', 'align' => 'center', 'toolbar' => '#barDemo', 'width' => 300]
         ]];
 
@@ -55,15 +56,29 @@ class CommentController extends TemplateController
         $model= $this->model;
         $limit=$request->limit??'10';
         $count=$model->count();
-        $paginate=$model->with('user','goods')->paginate($limit);
+        $paginate=$model->with('user','goods')->orderByDesc('created_at')->paginate($limit);
         $data=$paginate->toArray();
         return  $data=['code'=>0,'msg'=>'','count'=>$count,'data'=>$data['data']];
     }
     public function show($id)
     {
-        $model=$this->model::with('images')->find($id);
+        $model=$this->model::with('images','user','order')->find($id);
         $config = $this->config;//获取配置
         return view('admin.'.''.$this->config['show'],compact('model','config'));
+    }
+    //开启审核
+    public function switchSale(Request $request){
+        if ($request->ajax()){
+            $id=$request->input('id');
+            $switch=$request->input('switch');
+            $switch=$switch?1:0;
+            if (Comment::where('id',$id)->update(['check'=>$switch])){
+                return $this->json();
+            }
+            return $this->json([],'',400);
+
+        }
+
     }
 
 

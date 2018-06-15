@@ -156,7 +156,7 @@
 
                                         </div>
                                         <div class="layui-input-inline">
-                                        
+
                                             <input type="text" name="brand_id" placeholder="" autocomplete="off"
                                                    class="layui-input" value="{{$model->address->area}}" disabled>
                                         </div>

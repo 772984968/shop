@@ -13,7 +13,7 @@ class UserController extends TemplateController
     public $config=[
         "title"=>'用户管理',
         'index'=>'user.index',//首页
-        'create'=>'user.create',//创建
+  //      'create'=>'user.create',//创建
         'store'=>'user.store',//创建保存
         'edit'=>'user.edit',//编辑
         'update'=>'user.update',//编辑保存

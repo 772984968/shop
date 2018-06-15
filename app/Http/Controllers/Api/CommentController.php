@@ -22,7 +22,7 @@ class CommentController extends AuthController
     public function show(Request $request,$goods_id){
 
         $limit=$request->input('limit')??10;
-        $com=Comment::with('user','goods')->where('goods_id',$goods_id)->paginate($limit);
+        $com=Comment::with('user','goods')->where('check',1)->where('goods_id',$goods_id)->paginate($limit);
         return $this->arrayResponse($com);
     }
     //评价商品
